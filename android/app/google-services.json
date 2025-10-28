@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "601184227211",
+    "project_id": "saveplate-kehlsteinhaus",
+    "storage_bucket": "saveplate-kehlsteinhaus.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601184227211:android:f658a50a2c304a9988698e",
+        "android_client_info": {
+          "package_name": "com.example.save_plate_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601184227211-t3n2pa9i06sst2rm6ld53mg99t4pbthq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.save_plate_app",
+            "certificate_hash": "1143b4ac3e8d54510d82036c2738920c109c08dc"
+          }
+        },
+        {
+          "client_id": "601184227211-rkmo1rlk0n7046kuolgcmhbnjvor539q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGytiwqIKneQNhKOD7htcD055AjSrnHG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601184227211-rkmo1rlk0n7046kuolgcmhbnjvor539q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "601184227211-n79buii1vja65p0bil3sj8naf5hau3vc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.savePlateApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
