@@ -1,0 +1,328 @@
+@import "tailwindcss";
+
+/* SavePlate Brand Colors - Professional & Mission-Driven */
+:root {
+  --saveplate-forest: #16a34a; /* Deep forest green - Trust & sustainability */
+  --saveplate-earth: #92400e; /* Earth brown - Grounding & authenticity */
+  --saveplate-saffron: #d97706; /* Saffron - Cultural heritage */
+  --saveplate-mango: #f59e0b; /* Mango accent - Warmth */
+  --saveplate-sage: #84cc16; /* Sage green - Growth & hope */
+  --saveplate-purple: #7c3aed; /* Gentle purple - Community */
+  --saveplate-white: #ffffff;
+  --saveplate-neutral: #f8fafc; /* Soft neutral background */
+  --saveplate-gray: #64748b; /* Professional gray */
+  --saveplate-dark: #1e293b; /* Deep slate */
+  --saveplate-success: #059669;
+  --saveplate-warning: #d97706;
+  --saveplate-error: #dc2626;
+  
+  /* Mission-focused gradients */
+  --gradient-primary: linear-gradient(135deg, var(--saveplate-forest), var(--saveplate-sage));
+  --gradient-warm: linear-gradient(135deg, var(--saveplate-saffron), var(--saveplate-mango));
+  --gradient-earth: linear-gradient(135deg, var(--saveplate-earth), var(--saveplate-saffron));
+}
+
+/* Custom animations and micro-interactions */
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+}
+
+@keyframes count-up {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(132, 204, 22, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(132, 204, 22, 0.8), 0 0 30px rgba(132, 204, 22, 0.6); }
+}
+
+@keyframes gentle-fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes subtle-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes count-up-smooth {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes card-hover {
+  from { transform: translateY(0) scale(1); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+  to { transform: translateY(-2px) scale(1.01); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); }
+}
+
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: var(--progress-width, 75%); }
+}
+
+@keyframes gentle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Professional utility classes */
+.fade-in {
+  animation: gentle-fade-in 0.8s ease-out;
+}
+
+.subtle-hover {
+  transition: all 0.3s ease;
+}
+
+.subtle-hover:hover {
+  animation: card-hover 0.3s ease forwards;
+}
+
+.count-up-smooth {
+  animation: count-up-smooth 1s ease-out;
+}
+
+.gentle-pulse {
+  animation: gentle-pulse 3s ease-in-out infinite;
+}
+
+.progress-bar {
+  animation: progress-fill 2s ease-out;
+}
+
+.professional-shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.professional-shadow-lg {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.mission-focus {
+  border-left: 4px solid var(--saveplate-forest);
+  background: linear-gradient(90deg, rgba(22, 163, 74, 0.05) 0%, transparent 100%);
+}
+
+/* Landing page specific styles */
+.bg-coral-400 {
+  background-color: #ff7875;
+}
+
+.text-coral-400 {
+  color: #ff7875;
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* Hide scrollbar for filter chips */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Professional Logo & Icon Styles */
+.logo-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--gradient-primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+  font-size: 1.5rem;
+}
+
+.cultural-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(217, 119, 6, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(22, 163, 74, 0.1) 0%, transparent 50%);
+}
+
+.impact-badge {
+  background: var(--gradient-primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 24px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.2);
+}
+
+.trust-indicator {
+  background: rgba(22, 163, 74, 0.1);
+  border: 1px solid rgba(22, 163, 74, 0.2);
+  color: var(--saveplate-forest);
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Indian cultural design elements */
+.mandala-bg {
+  background-image: radial-gradient(circle at center, rgba(132, 204, 22, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 25% 25%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+}
+
+.thali-pattern {
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(245, 158, 11, 0.2) 0%, transparent 30%),
+    radial-gradient(circle at 80% 20%, rgba(132, 204, 22, 0.2) 0%, transparent 30%),
+    radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 30%),
+    radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 30%);
+}
+
+/* Accessibility enhancements */
+.focus-visible {
+  outline: 3px solid var(--saveplate-lime);
+  outline-offset: 2px;
+}
+
+.high-contrast {
+  filter: contrast(1.2);
+}
+
+/* Mobile-first responsive utilities */
+.sticky-cta {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 50;
+}
+
+@media (max-width: 768px) {
+  .sticky-cta {
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+/* Food imagery backgrounds with Indian elements */
+.food-bg-indian {
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(245, 158, 11, 0.3) 0%, rgba(245, 158, 11, 0.1) 50%, transparent 100%),
+    radial-gradient(circle at 70% 30%, rgba(132, 204, 22, 0.3) 0%, rgba(132, 204, 22, 0.1) 50%, transparent 100%),
+    radial-gradient(circle at 20% 70%, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.1) 50%, transparent 100%);
+}
+
+/* Festival-inspired patterns */
+.diwali-lights {
+  background: 
+    radial-gradient(circle at 10% 10%, rgba(251, 191, 36, 0.4) 0%, transparent 20%),
+    radial-gradient(circle at 90% 20%, rgba(245, 158, 11, 0.4) 0%, transparent 20%),
+    radial-gradient(circle at 20% 90%, rgba(124, 58, 237, 0.4) 0%, transparent 20%),
+    radial-gradient(circle at 80% 80%, rgba(251, 146, 60, 0.4) 0%, transparent 20%);
+}
+
+.holi-colors {
+  background: 
+    linear-gradient(45deg, rgba(132, 204, 22, 0.1) 0%, transparent 25%),
+    linear-gradient(-45deg, rgba(251, 191, 36, 0.1) 25%, transparent 50%),
+    linear-gradient(135deg, rgba(124, 58, 237, 0.1) 50%, transparent 75%),
+    linear-gradient(-135deg, rgba(251, 146, 60, 0.1) 75%, transparent 100%);
+}
+
+/* Custom icon styles */
+.custom-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.custom-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Badge system */
+.eco-badge {
+  background: linear-gradient(135deg, var(--saveplate-lime), var(--mascot-primary));
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  box-shadow: 0 2px 8px rgba(132, 204, 22, 0.3);
+}
+
+.hero-badge {
+  background: linear-gradient(135deg, var(--saveplate-royal-purple), var(--saveplate-festival-orange));
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+}
+
+/* Interactive elements */
+.interactive-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.interactive-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.interactive-card:active {
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Typography enhancements */
+.hero-text {
+  background: linear-gradient(135deg, var(--saveplate-lime), var(--mascot-primary), var(--saveplate-mango));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.festival-text {
+  background: linear-gradient(45deg, var(--saveplate-saffron), var(--saveplate-festival-orange), var(--saveplate-royal-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+}
