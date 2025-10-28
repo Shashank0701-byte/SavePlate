@@ -1,153 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-// Mock data with authentic Indian restaurants and enhanced details
-const mockMeals = [
-  {
-    id: 1,
-    restaurantName: "Maharaja's Kitchen",
-    restaurantImage: "👑",
-    mealName: "Royal Chicken Biryani",
-    originalPrice: 450,
-    discountedPrice: 225,
-    discount: 50,
-    quantity: 3,
-    pickupTime: "6:00 PM - 8:00 PM",
-    distance: "0.8 km",
-    rating: 4.8,
-    tags: ["Hyderabadi", "Non-Veg", "Spicy"],
-    description: "Authentic Hyderabadi biryani with succulent chicken and aromatic spices",
-    foodEmoji: "🍛",
-    location: "Connaught Place, Delhi",
-    badges: ["🏆 Best Seller", "🔥 Trending", "⚡ Limited Time"],
-    reviews: 1247,
-    sustainabilityScore: 95,
-    heroLevel: "Eco Champion"
-  },
-  {
-    id: 2,
-    restaurantName: "Dosa Corner",
-    restaurantImage: "🥞",
-    mealName: "Masala Dosa with Sambar",
-    originalPrice: 180,
-    discountedPrice: 90,
-    discount: 50,
-    quantity: 5,
-    pickupTime: "7:00 PM - 9:00 PM",
-    distance: "1.2 km",
-    rating: 4.6,
-    tags: ["South Indian", "Vegetarian", "Crispy"],
-    description: "Crispy golden dosa with spiced potato filling and coconut chutney",
-    foodEmoji: "🥞",
-    location: "Brigade Road, Bangalore",
-    badges: ["🌱 Vegan Friendly", "💚 Healthy Choice"],
-    reviews: 892,
-    sustainabilityScore: 88,
-    heroLevel: "Green Warrior"
-  },
-  {
-    id: 3,
-    restaurantName: "Punjabi Dhaba",
-    restaurantImage: "🚛",
-    mealName: "Dal Makhani with Naan",
-    originalPrice: 320,
-    discountedPrice: 160,
-    discount: 50,
-    quantity: 4,
-    pickupTime: "5:30 PM - 7:30 PM",
-    distance: "0.5 km",
-    rating: 4.7,
-    tags: ["Punjabi", "Vegetarian", "Rich"],
-    description: "Creamy black lentils with butter naan and pickle",
-    foodEmoji: "🫘",
-    location: "Karol Bagh, Delhi"
-  },
-  {
-    id: 4,
-    restaurantName: "Coastal Spice",
-    restaurantImage: "🐟",
-    mealName: "Fish Curry with Rice",
-    originalPrice: 380,
-    discountedPrice: 190,
-    discount: 50,
-    quantity: 2,
-    pickupTime: "6:30 PM - 8:30 PM",
-    distance: "1.5 km",
-    rating: 4.5,
-    tags: ["Coastal", "Non-Veg", "Coconut"],
-    description: "Kerala-style fish curry with coconut milk and steamed rice",
-    foodEmoji: "🍛",
-    location: "Fort Kochi, Kerala"
-  },
-  {
-    id: 5,
-    restaurantName: "Chaat Bazaar",
-    restaurantImage: "🎪",
-    mealName: "Pani Puri & Bhel Mix",
-    originalPrice: 150,
-    discountedPrice: 75,
-    discount: 50,
-    quantity: 6,
-    pickupTime: "5:00 PM - 7:00 PM",
-    distance: "0.3 km",
-    rating: 4.4,
-    tags: ["Street Food", "Vegetarian", "Tangy"],
-    description: "Mumbai-style street food combo with chutneys and sev",
-    foodEmoji: "🥙",
-    location: "Juhu Beach, Mumbai"
-  },
-  {
-    id: 6,
-    restaurantName: "Tandoor Express",
-    restaurantImage: "🔥",
-    mealName: "Tandoori Chicken Platter",
-    originalPrice: 520,
-    discountedPrice: 260,
-    discount: 50,
-    quantity: 3,
-    pickupTime: "7:30 PM - 9:30 PM",
-    distance: "2.1 km",
-    rating: 4.9,
-    tags: ["Tandoori", "Non-Veg", "Smoky"],
-    description: "Clay oven roasted chicken with mint chutney and onion salad",
-    foodEmoji: "🍗",
-    location: "Khan Market, Delhi"
-  },
-  {
-    id: 7,
-    restaurantName: "Rajasthani Rasoi",
-    restaurantImage: "🏰",
-    mealName: "Dal Baati Churma",
-    originalPrice: 280,
-    discountedPrice: 140,
-    discount: 50,
-    quantity: 4,
-    pickupTime: "6:30 PM - 8:30 PM",
-    distance: "2.1 km",
-    rating: 4.3,
-    tags: ["Rajasthani", "Vegetarian", "Traditional"],
-    description: "Traditional Rajasthani platter with baked wheat balls and sweet churma",
-    foodEmoji: "🥟",
-    location: "Jaipur, Rajasthan"
-  },
-  {
-    id: 8,
-    restaurantName: "Bengali Bhoj",
-    restaurantImage: "🐟",
-    mealName: "Fish Fry & Rice",
-    originalPrice: 350,
-    discountedPrice: 175,
-    discount: 50,
-    quantity: 3,
-    pickupTime: "7:00 PM - 9:00 PM",
-    distance: "1.8 km",
-    rating: 4.6,
-    tags: ["Bengali", "Non-Veg", "Mustard"],
-    description: "Crispy fish fry with steamed rice and mustard sauce",
-    foodEmoji: "🐟",
-    location: "Park Street, Kolkata"
-  }
-];
+import { meals as mealsData } from "../data/meals";
 
 function CustomerDashboard() {
   const [meals, setMeals] = useState([]);
@@ -155,11 +8,12 @@ function CustomerDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [location, setLocation] = useState("Detecting location...");
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     // Simulate API call to fetch meals
     setTimeout(() => {
-      setMeals(mockMeals);
+      setMeals(mealsData);
       setLoading(false);
     }, 1000);
 
@@ -176,6 +30,12 @@ function CustomerDashboard() {
     } else {
       setLocation("Mumbai, Maharashtra");
     }
+
+    // Load favorites
+    try {
+      const fav = JSON.parse(localStorage.getItem('saveplate_favorites') || '[]');
+      setFavorites(fav);
+    } catch {}
   }, []);
 
   const filteredMeals = meals.filter(meal => {
@@ -187,6 +47,15 @@ function CustomerDashboard() {
       tag.toLowerCase().includes(selectedFilter.toLowerCase())
     );
   });
+
+  const favoriteRestaurants = favorites
+    .map(fr => meals.find(m => m.restaurantId === fr))
+    .filter(Boolean)
+    .reduce((acc, m) => {
+      // unique by restaurantId
+      if (!acc.some(x => x.restaurantId === m.restaurantId)) acc.push(m);
+      return acc;
+    }, []);
 
   const MealCard = ({ meal }) => (
     <div className="bg-white rounded-2xl professional-shadow hover:professional-shadow-lg transition-all duration-300 overflow-hidden subtle-hover border border-slate-200">
@@ -275,9 +144,9 @@ function CustomerDashboard() {
         {/* Professional Reserve Button */}
         <Link
           to={`/reservation/${meal.id}`}
-          className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-4 px-6 rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-300 text-center block font-semibold text-lg professional-shadow subtle-hover"
+          className="w-full bg-[#e23744] text-white py-4 px-6 rounded-xl hover:bg-[#c81f2b] transition-colors duration-200 text-center block font-semibold text-lg professional-shadow subtle-hover"
         >
-          Reserve This Meal
+          Reserve Now
         </Link>
       </div>
     </div>
@@ -433,6 +302,29 @@ function CustomerDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Favorites Section */}
+      {favoriteRestaurants.length > 0 && (
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="bg-white rounded-2xl p-6 professional-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-slate-800">Frequently ordered from</h2>
+              <Link to="/customer" className="text-sm text-[#e23744] font-semibold">See all</Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {favoriteRestaurants.slice(0, 6).map((m) => (
+                <Link key={m.restaurantId} to={`/reservation/${m.id}`} className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-200">
+                  <div className="w-12 h-12 rounded-lg bg-slate-100 grid place-items-center text-xl">{m.restaurantImage || '🏪'}</div>
+                  <div>
+                    <div className="font-semibold text-slate-800">{m.restaurantName}</div>
+                    <div className="text-xs text-slate-500">Check today’s surplus</div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Stats Bar */}
       <div className="bg-gradient-to-r from-green-500 to-green-600 text-white">

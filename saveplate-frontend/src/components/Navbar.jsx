@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 function Navbar({ isAuthenticated }) {
@@ -9,6 +9,26 @@ function Navbar({ isAuthenticated }) {
   const user = isAuthenticated ? JSON.parse(localStorage.getItem('saveplate_user') || 'null') : null;
 
   const isActive = (path) => location.pathname === path;
+
+  // Prevent background scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isMenuOpen]);
 
   return (
     <nav className="bg-white shadow-xl sticky top-0 z-50 border-b-4 border-lime-500">
@@ -31,6 +51,22 @@ function Navbar({ isAuthenticated }) {
                 </span>
                 <div className="text-xs text-amber-600 font-semibold">India's #1 Food Rescue</div>
               </div>
+            </Link>
+          </div>
+
+          {/* Partner quick access */}
+          <div className="hidden md:flex items-center space-x-3">
+            <Link 
+              to="/partner/login" 
+              className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 ${isActive('/partner/login') ? 'text-white bg-[#e23744] shadow-lg' : 'text-gray-700 hover:text-[#e23744] hover:bg-slate-50'}`}
+            >
+              🛵 Partner Login
+            </Link>
+            <Link 
+              to="/partner/heatmap" 
+              className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 ${isActive('/partner/heatmap') ? 'text-white bg-[#e23744] shadow-lg' : 'text-gray-700 hover:text-[#e23744] hover:bg-slate-50'}`}
+            >
+              🔥 Heat Map
             </Link>
           </div>
 
@@ -138,16 +174,22 @@ function Navbar({ isAuthenticated }) {
           </div>
         </div>
 
-        {/* Enhanced Mobile Navigation */}
+        {/* Enhanced Mobile Navigation as fixed overlay (prevents page jump) */}
         {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-2 sm:px-3 bg-gradient-to-br from-lime-50 to-green-50 border-t-2 border-lime-200 rounded-b-2xl shadow-xl">
+          <div className="md:hidden fixed inset-0 z-50">
+            {/* Backdrop */}
+            <div 
+              className="absolute inset-0 bg-black bg-opacity-30"
+              onClick={() => setIsMenuOpen(false)}
+            />
+            {/* Panel */}
+            <div className="absolute top-[64px] left-0 right-0 px-2 pt-2 pb-3 space-y-2 sm:px-3 bg-white border-t border-slate-200 shadow-2xl rounded-b-2xl">
               <Link 
                 to="/" 
                 className={`block px-4 py-3 rounded-xl text-base font-bold transition-all duration-300 focus-visible ${
                   isActive('/') 
-                    ? 'text-white bg-gradient-to-r from-lime-500 to-green-600 shadow-lg' 
-                    : 'text-gray-700 hover:text-lime-600 hover:bg-white hover:shadow-md'
+                    ? 'text-white bg-[#e23744] shadow-lg' 
+                    : 'text-gray-700 hover:text-[#e23744] hover:bg-slate-50 hover:shadow-md'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -157,8 +199,8 @@ function Navbar({ isAuthenticated }) {
                 to="/meals" 
                 className={`block px-4 py-3 rounded-xl text-base font-bold transition-all duration-300 focus-visible ${
                   isActive('/meals') 
-                    ? 'text-white bg-gradient-to-r from-lime-500 to-green-600 shadow-lg' 
-                    : 'text-gray-700 hover:text-lime-600 hover:bg-white hover:shadow-md'
+                    ? 'text-white bg-[#e23744] shadow-lg' 
+                    : 'text-gray-700 hover:text-[#e23744] hover:bg-slate-50 hover:shadow-md'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -168,12 +210,28 @@ function Navbar({ isAuthenticated }) {
                 to="/restaurant" 
                 className={`block px-4 py-3 rounded-xl text-base font-bold transition-all duration-300 focus-visible ${
                   isActive('/restaurant') 
-                    ? 'text-white bg-gradient-to-r from-lime-500 to-green-600 shadow-lg' 
-                    : 'text-gray-700 hover:text-lime-600 hover:bg-white hover:shadow-md'
+                    ? 'text-white bg-[#e23744] shadow-lg' 
+                    : 'text-gray-700 hover:text-[#e23744] hover:bg-slate-50 hover:shadow-md'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 🏪 For Restaurants
+              </Link>
+
+              {/* Partner links */}
+              <Link 
+                to="/partner/login" 
+                className={`block px-4 py-3 rounded-xl text-base font-bold transition-all duration-300 ${isActive('/partner/login') ? 'text-white bg-[#e23744] shadow-lg' : 'text-gray-700 hover:text-[#e23744] hover:bg-slate-50 hover:shadow-md'}`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                🛵 Partner Login
+              </Link>
+              <Link 
+                to="/partner/heatmap" 
+                className={`block px-4 py-3 rounded-xl text-base font-bold transition-all duration-300 ${isActive('/partner/heatmap') ? 'text-white bg-[#e23744] shadow-lg' : 'text-gray-700 hover:text-[#e23744] hover:bg-slate-50 hover:shadow-md'}`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                🔥 Heat Map
               </Link>
               
               {/* Mobile Auth Links with Enhanced Styling */}
@@ -183,8 +241,8 @@ function Navbar({ isAuthenticated }) {
                     to="/profile" 
                     className={`block px-4 py-3 rounded-xl text-base font-bold transition-all duration-300 focus-visible ${
                       isActive('/profile') 
-                        ? 'text-white bg-gradient-to-r from-purple-500 to-pink-600 shadow-lg' 
-                        : 'text-gray-700 hover:text-purple-600 hover:bg-white hover:shadow-md'
+                        ? 'text-white bg-[#e23744] shadow-lg' 
+                        : 'text-gray-700 hover:text-[#e23744] hover:bg-slate-50 hover:shadow-md'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -201,14 +259,14 @@ function Navbar({ isAuthenticated }) {
                 <>
                   <Link 
                     to="/login" 
-                    className="block px-4 py-3 rounded-xl text-base font-bold text-gray-700 hover:text-lime-600 hover:bg-white hover:shadow-md transition-all duration-300 focus-visible"
+                    className="block px-4 py-3 rounded-xl text-base font-bold text-gray-700 hover:text-[#e23744] hover:bg-slate-50 hover:shadow-md transition-all duration-300 focus-visible"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     🔑 Login
                   </Link>
                   <Link 
                     to="/register" 
-                    className="block px-4 py-3 rounded-xl text-base font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg ripple-effect focus-visible"
+                    className="block px-4 py-3 rounded-xl text-base font-bold bg-[#e23744] text-white hover:bg-[#c81f2b] transition-all duration-300 shadow-lg ripple-effect focus-visible"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     ✨ Join SavePlate!
