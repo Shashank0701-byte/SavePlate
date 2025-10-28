@@ -1,144 +1,255 @@
-SavePlate Frontend 🍽️
-A modern React.js frontend for SavePlate - a platform that connects restaurants with surplus food to customers seeking discounted meals, fighting food waste.
+# 🍽️ SavePlate — Fight Food Waste, One Meal at a Time
 
-🌟 Features
-Customer Features
-🔍 Meal Discovery: Browse surplus meals from nearby restaurants with real-time availability
-📍 Location-Based Search: Find meals based on your current location
-🔐 Authentication: Secure login/register with JWT session management
-💳 Payment Integration: Instant payment and secure meal reservation
-📱 QR Code Pickup: Contactless meal pickup with QR code generation
-👤 Profile Management: Track savings, meals rescued, and environmental impact
-Restaurant Features
-📊 Dashboard: Comprehensive dashboard to manage surplus meal listings
-💰 Revenue Tracking: Monitor earnings from surplus food sales
-📋 Order Management: Real-time order tracking and QR code verification
-🌱 Impact Analytics: Track CO₂ saved and meals diverted from waste
-⚡ Quick Listing: Easy-to-use interface for adding surplus meals
-General Features
-🎨 Modern UI: Clean, mobile-friendly design with Tailwind CSS
-📱 Responsive Design: Optimized for all screen sizes
-🚀 Fast Performance: Built with Vite for optimal development and production builds
-♿ Accessibility: WCAG compliant design patterns
-🛠️ Tech Stack
-Frontend Framework: React.js 19.1.1
-Routing: React Router DOM 7.9.4
-Styling: Tailwind CSS 4.1.16
-QR Code Generation: qrcode.react 4.2.0
-Build Tool: Vite 7.1.7
-Package Manager: npm
-🚀 Getting Started
-Prerequisites
-Node.js (v18 or higher)
-npm or yarn
-Installation
-Install dependencies
+SavePlate is a full-stack web application that connects restaurants with surplus food to customers looking for affordable, quality meals — helping reduce food waste and promote sustainability.
+
+---
+
+## 🌟 Overview
+
+**Frontend:** React.js (Vite + Tailwind CSS)  
+**Backend:** Node.js (Express + MongoDB + JWT)  
+**Goal:** Bridge the gap between food surplus and food demand while rewarding eco-conscious dining.
+
+---
+
+## ✨ Features
+
+### 👥 Customer Features
+- 🔍 **Meal Discovery:** Browse surplus meals from nearby restaurants in real-time  
+- 📍 **Location-Based Search:** Discover meals near your current location  
+- 💳 **Secure Payments:** Instant online payments and seamless reservations  
+- 📱 **QR Code Pickup:** Contactless pickup using dynamic QR codes  
+- 👤 **Profile Dashboard:** Track savings, rescued meals, and environmental impact  
+
+### 🏪 Restaurant Features
+- 📊 **Smart Dashboard:** Manage meal listings, orders, and analytics in one place  
+- 💰 **Revenue Tracking:** Monitor surplus meal earnings in real-time  
+- 📋 **Order Management:** Process orders and verify QR codes  
+- 🌱 **Impact Analytics:** Visualize CO₂ saved and meals diverted from waste  
+- ⚡ **Quick Listings:** Post surplus meals in seconds  
+
+### 💻 General Features
+- 🎨 **Modern UI/UX:** Responsive, mobile-first design with Tailwind CSS  
+- 🚀 **Fast Performance:** Built with Vite for blazing-fast builds  
+- ♿ **Accessibility:** WCAG-compliant, keyboard navigable design  
+- 🔐 **Authentication:** Secure JWT-based auth system for both customers & restaurants  
+
+---
+
+## 🛠️ Tech Stack
+
+### 🖥️ Frontend
+| Technology | Purpose |
+|-------------|----------|
+| **React.js 19.1.1** | Core frontend framework |
+| **React Router DOM 7.9.4** | SPA routing |
+| **Tailwind CSS 4.1.16** | Styling and responsive design |
+| **qrcode.react 4.2.0** | QR code generation |
+| **Vite 7.1.7** | Build and dev tool |
+| **npm** | Package manager |
+
+### 🌍 Backend
+| Technology | Purpose |
+|-------------|----------|
+| **Node.js / Express.js** | RESTful backend framework |
+| **MongoDB + Mongoose** | Database and schema modeling |
+| **JWT Authentication** | Secure login and token validation |
+| **dotenv, cors** | Config and security middlewares |
+
+---
+
+## 🚀 Getting Started
+
+### 🔧 Prerequisites
+- Node.js (v18+)
+- npm or yarn
+- MongoDB (local or Atlas cluster)
+
+---
+
+## ⚙️ Installation
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/yourusername/saveplate.git
+cd saveplate
+
+
+2️⃣ Backend Setup
+cd backend
+cp .env.example .env
+
+
+Configure your .env file:
+
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+CORS_ORIGIN=http://localhost:5173
+
+
+Install dependencies:
 
 npm install
-Start development server
+
+
+Run development server:
 
 npm run dev
-Open in browser Navigate to http://localhost:5173
 
-Available Scripts
-npm run dev - Start development server
-npm run build - Build for production
-npm run preview - Preview production build
-npm run lint - Run ESLint
+
+Backend runs on: http://localhost:8000
+
+3️⃣ Frontend Setup
+cd ../frontend
+npm install
+
+
+Start development server:
+
+npm run dev
+
+
+Frontend runs on: http://localhost:5173
+
 📁 Project Structure
-src/
-├── components/          # Reusable UI components
-│   ├── Footer.jsx      # Site footer with links and stats
-│   ├── Loading.jsx     # Loading spinner component
-│   ├── MealCard.jsx    # Reusable meal card component
-│   └── Navbar.jsx      # Navigation header with auth state
-├── pages/              # Main application pages
-│   ├── CustomerDashboard.jsx    # Customer meal discovery interface
-│   ├── Home.jsx                 # Landing page with hero and features
-│   ├── Login.jsx                # User authentication login
-│   ├── Profile.jsx              # User profile and settings
-│   ├── Register.jsx             # User registration form
-│   ├── ReservationPage.jsx      # Meal reservation and payment flow
-│   └── RestaurantDashboard.jsx  # Restaurant management interface
-├── App.jsx             # Main app component with routing
-├── index.css           # Global styles and Tailwind imports
-└── main.jsx           # React app entry point
-✨ Key Features Implemented
+saveplate/
+├── backend/
+│   ├── server.js            # Express server entry point
+│   ├── routes/              # API route handlers
+│   ├── controllers/         # Business logic
+│   ├── models/              # MongoDB schemas
+│   ├── middleware/          # Auth & error handling
+│   └── .env.example         # Environment config sample
+│
+└── frontend/
+    ├── src/
+    │   ├── components/      
+    │   │   ├── Navbar.jsx
+    │   │   ├── Footer.jsx
+    │   │   ├── MealCard.jsx
+    │   │   └── Loading.jsx
+    │   ├── pages/
+    │   │   ├── Home.jsx
+    │   │   ├── Login.jsx
+    │   │   ├── Register.jsx
+    │   │   ├── CustomerDashboard.jsx
+    │   │   ├── RestaurantDashboard.jsx
+    │   │   ├── Profile.jsx
+    │   │   └── ReservationPage.jsx
+    │   ├── App.jsx
+    │   ├── main.jsx
+    │   └── index.css
+    ├── vite.config.js
+    └── package.json
+
+🎨 Frontend Highlights
 🏠 Landing Page
-Hero Section: Eye-catching design with animated food elements
-How It Works: Step-by-step process for customers and restaurants
-Features Showcase: Environmental impact, savings, and user experience
-Call-to-Action: Clear conversion paths for both user types
-🔐 Authentication System
-Login/Register: Complete user authentication flow with validation
-Demo Accounts: Quick access buttons for testing different user types
-Form Validation: Client-side validation with comprehensive error handling
-Responsive Design: Mobile-optimized authentication forms
-👥 Customer Experience
-Meal Discovery: Advanced search and filtering by cuisine, diet, location
-Real-time Updates: Live meal availability and quantity tracking
-Reservation Flow: 3-step booking process (Details → Payment → Confirmation)
-QR Code Generation: Secure pickup verification system
-Profile Management: Track personal savings and environmental impact
-🏪 Restaurant Management
-Multi-tab Dashboard: Overview, Listings, and Orders management
-Quick Actions: Streamlined meal addition and order management
-Revenue Tracking: Real-time earnings and performance metrics
-Impact Analytics: CO₂ saved and waste reduction tracking
-Order Management: Status updates and QR code verification
-🎨 Design System
-Modern UI/UX
-Zomato-Inspired Design: Food-focused visual language with appetizing colors
-Responsive Layout: Mobile-first approach with desktop enhancements
-Interactive Elements: Smooth transitions and hover effects
-Accessibility: WCAG compliant with proper contrast and navigation
-Component Library
-Reusable Components: MealCard, Loading, Navigation components
-Consistent Styling: Unified color palette and typography
-State Management: Loading states, error handling, and success feedback
-🔧 Technical Implementation
-State Management
-React Hooks: useState, useEffect for local component state
-Mock Data: Comprehensive demo data for development and testing
-API Ready: Structured for easy backend integration
-Performance Optimizations
-Code Organization: Modular component structure
-Lazy Loading: Efficient resource loading
-Responsive Images: Optimized for different screen sizes
-🚀 Production Ready Features
-Security Considerations
-Input Validation: Client-side form validation
-XSS Prevention: Safe rendering of user content
-Authentication Flow: JWT token structure (ready for backend)
-Deployment Ready
-Environment Configuration: Ready for environment variables
-Build Optimization: Vite production builds
-SEO Friendly: Proper meta tags and semantic HTML
+
+Hero section with animated visuals
+
+“How it Works” step-by-step guide
+
+Environmental impact showcase
+
+Dual call-to-action for customers and restaurants
+
+🔐 Authentication
+
+Login/Register with full validation
+
+Demo accounts for quick testing
+
+JWT-ready frontend structure
+
+Responsive design for mobile devices
+
+🍴 Customer Flow
+
+Browse & search by cuisine, location, diet
+
+Real-time updates for availability
+
+3-step reservation process
+
+Auto QR generation for meal pickup
+
+Impact tracking in profile
+
+🧾 Restaurant Flow
+
+Manage meals, orders, and analytics
+
+Real-time order status and QR verification
+
+Quick listing and revenue insights
+
+CO₂ savings and impact data visualization
+
+⚙️ Backend Highlights
+
+🔐 JWT Authentication: Secure token-based login system
+
+🧠 MVC Structure: Clean and scalable code organization
+
+🗄️ MongoDB Integration: Efficient and flexible data storage
+
+🧾 API-Ready: Designed for easy frontend communication
+
+🌍 CORS Support: Configurable origins for local and production setups
+
 🔮 Future Enhancements
-Planned Features
-Real-time Notifications: Push notifications for meal availability
-Advanced Geolocation: GPS-based restaurant discovery
-Social Features: Reviews, ratings, and meal sharing
-Loyalty Program: Points and rewards system
-Multi-language Support: Internationalization ready
-Technical Roadmap
-Backend Integration: API integration with Node.js/Express
-State Management: Context API or Redux implementation
-Testing Suite: Unit and integration tests
-PWA Features: Offline capabilities and app installation
+Feature	Description
+🔔 Real-time Notifications	Push alerts for meal availability
+📡 Advanced Geolocation	GPS-based meal discovery
+💬 Social Features	Reviews and ratings
+🏆 Loyalty Program	Earn rewards for rescued meals
+🌐 Multi-language Support	Internationalization (i18n)
+💾 PWA Mode	Offline access and app installation
+🧪 Testing Suite	Jest-based unit and integration tests
 📱 Mobile Experience
-Responsive Design
-Touch-Friendly: Optimized touch targets and gestures
-Mobile Navigation: Collapsible menu and mobile-first layout
-Performance: Fast loading on mobile networks
-Cross-Platform: Consistent experience across devices
+
+Touch-optimized UI
+
+Collapsible mobile navigation
+
+Lightweight and responsive components
+
+Fast performance on low-bandwidth connections
+
 🤝 Contributing
+
+We welcome contributions!
+To contribute:
+
 Fork the repository
-Create a feature branch (git checkout -b feature/amazing-feature)
-Commit changes (git commit -m 'Add amazing feature')
-Push to branch (git push origin feature/amazing-feature)
+
+Create a feature branch
+
+git checkout -b feature/amazing-feature
+
+
+Commit changes
+
+git commit -m "Add amazing feature"
+
+
+Push to branch
+
+git push origin feature/amazing-feature
+
+
 Open a Pull Request
-Made with 💚 for the planet - Fighting food waste, one meal at a time.
 
 📞 Support
-For questions or support, please contact the development team or create an issue in the repository.
+
+For questions, bugs, or feedback —
+🧑‍💻 Open an issue on GitHub or contact the development team.
+
+💚 Made with Love for the Planet
+
+SavePlate — Fighting food waste, one meal at a time.
+
+
+---
+
+Would you like me to format this README for **GitHub-flavored markdown with emojis, badges (e.g., React
