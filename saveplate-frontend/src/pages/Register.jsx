@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-function Register() {
+function Register({ userType = 'customer', setIsAuthenticated }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
-    userType: 'customer', // 'customer' or 'restaurant'
+    userType: userType, // 'customer' or 'restaurant'
     phone: '',
     agreeToTerms: false
   });
@@ -95,12 +95,9 @@ function Register() {
       localStorage.setItem('saveplate_token', 'mock_jwt_token');
       localStorage.setItem('saveplate_user', JSON.stringify(userData));
       
-      // Redirect based on user type
-      if (formData.userType === 'restaurant') {
-        navigate('/restaurant');
-      } else {
-        navigate('/customer');
-      }
+      // Set authentication state and redirect to home page
+      setIsAuthenticated(true);
+      navigate('/home');
     } catch (err) {
       setErrors({ submit: 'Registration failed. Please try again.' });
     } finally {

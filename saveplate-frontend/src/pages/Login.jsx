@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login({ setIsAuthenticated }) {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -41,7 +41,9 @@ function Login() {
           type: 'customer'
         }));
         
-        navigate('/customer');
+        // Set authentication state and redirect to home page
+        setIsAuthenticated(true);
+        navigate('/home');
       } else {
         setError('Please fill in all fields');
       }

@@ -116,6 +116,19 @@
   background: linear-gradient(90deg, rgba(22, 163, 74, 0.05) 0%, transparent 100%);
 }
 
+/* Landing page specific styles */
+.bg-coral-400 {
+  background-color: #ff7875;
+}
+
+.text-coral-400 {
+  color: #ff7875;
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
 /* Professional Logo & Icon Styles */
 .logo-container {
   display: inline-flex;

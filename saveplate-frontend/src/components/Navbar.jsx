@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ isAuthenticated }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   
-  // Mock user state - in real app this would come from context/auth
-  const user = null; // Set to user object when logged in
+  // Get user from localStorage if authenticated
+  const user = isAuthenticated ? JSON.parse(localStorage.getItem('saveplate_user') || 'null') : null;
 
   const isActive = (path) => location.pathname === path;
 
@@ -36,36 +36,54 @@ function Navbar() {
 
           {/* Enhanced Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link 
-              to="/" 
-              className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 focus-visible ${
-                isActive('/') 
-                  ? 'text-white bg-gradient-to-r from-lime-500 to-green-600 shadow-lg' 
-                  : 'text-gray-700 hover:text-lime-600 hover:bg-lime-50 hover:scale-105'
-              }`}
-            >
-              🏠 Home
-            </Link>
-            <Link 
-              to="/meals" 
-              className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 focus-visible ${
-                isActive('/meals') 
-                  ? 'text-white bg-gradient-to-r from-lime-500 to-green-600 shadow-lg' 
-                  : 'text-gray-700 hover:text-lime-600 hover:bg-lime-50 hover:scale-105'
-              }`}
-            >
-              🍽️ Find Meals
-            </Link>
-            <Link 
-              to="/restaurant" 
-              className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 focus-visible ${
-                isActive('/restaurant') 
-                  ? 'text-white bg-gradient-to-r from-lime-500 to-green-600 shadow-lg' 
-                  : 'text-gray-700 hover:text-lime-600 hover:bg-lime-50 hover:scale-105'
-              }`}
-            >
-              🏪 For Restaurants
-            </Link>
+            {/* Show different navigation based on authentication */}
+            {isAuthenticated ? (
+              <>
+                <Link 
+                  to="/home" 
+                  className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 focus-visible ${
+                    isActive('/home') 
+                      ? 'text-white bg-gradient-to-r from-lime-500 to-green-600 shadow-lg' 
+                      : 'text-gray-700 hover:text-lime-600 hover:bg-lime-50 hover:scale-105'
+                  }`}
+                >
+                  🏠 Home
+                </Link>
+                <Link 
+                  to="/meals" 
+                  className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 focus-visible ${
+                    isActive('/meals') 
+                      ? 'text-white bg-gradient-to-r from-lime-500 to-green-600 shadow-lg' 
+                      : 'text-gray-700 hover:text-lime-600 hover:bg-lime-50 hover:scale-105'
+                  }`}
+                >
+                  🍽️ Find Meals
+                </Link>
+                {user?.type === 'restaurant' && (
+                  <Link 
+                    to="/restaurant" 
+                    className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 focus-visible ${
+                      isActive('/restaurant') 
+                        ? 'text-white bg-gradient-to-r from-lime-500 to-green-600 shadow-lg' 
+                        : 'text-gray-700 hover:text-lime-600 hover:bg-lime-50 hover:scale-105'
+                    }`}
+                  >
+                    🏪 Dashboard
+                  </Link>
+                )}
+              </>
+            ) : (
+              <Link 
+                to="/" 
+                className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 focus-visible ${
+                  isActive('/') 
+                    ? 'text-white bg-gradient-to-r from-lime-500 to-green-600 shadow-lg' 
+                    : 'text-gray-700 hover:text-lime-600 hover:bg-lime-50 hover:scale-105'
+                }`}
+              >
+                🏠 Home
+              </Link>
+            )}
             
             {/* Auth Links with Enhanced Styling */}
             {user ? (
