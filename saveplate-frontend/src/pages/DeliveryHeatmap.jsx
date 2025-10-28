@@ -1,36 +1,56 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { GoogleMap, useJsApiLoader, HeatmapLayer } from '@react-google-maps/api';
 
-// Simulated zones with dynamic demand index
-const baseZones = [
-  { id: 'koramangala', name: 'Koramangala', center: { x: 30, y: 40 }, radius: 18 },
-  { id: 'indiranagar', name: 'Indiranagar', center: { x: 65, y: 30 }, radius: 16 },
-  { id: 'whitefield', name: 'Whitefield', center: { x: 80, y: 45 }, radius: 20 },
-  { id: 'mgroad', name: 'MG Road', center: { x: 50, y: 50 }, radius: 14 },
-];
+// --- Google Map Settings ---
+const containerStyle = {
+  width: '100%',
+  height: '500px',
+  borderRadius: '1rem',
+};
 
-function demandToColor(d) {
-  // 0 -> green, 0.5 -> orange, 1 -> red
-  if (d > 0.75) return '#e23744';
-  if (d > 0.4) return '#fb923c';
-  return '#22c55e';
-}
+// Center the map on Bangalore
+const center = {
+  lat: 12.9716,
+  lng: 77.5946
+};
+
+const mapLibraries = ['visualization']; // Important: We need the 'visualization' library for heatmaps
 
 function DeliveryHeatmap() {
-  const [zones, setZones] = useState(baseZones.map(z => ({ ...z, demand: Math.random() })));
+  const [heatmapData, setHeatmapData] = useState([]);
 
+  // --- 1. Load the Google Maps Script ---
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    libraries: mapLibraries,
+  });
+
+  // --- 2. Fetch Real Heatmap Data from Backend ---
   useEffect(() => {
-    const iv = setInterval(() => {
-      setZones(prev => prev.map(z => ({
-        ...z,
-        demand: Math.min(1, Math.max(0, z.demand + (Math.random() - 0.5) * 0.2))
-      })));
-    }, 2500);
-    return () => clearInterval(iv);
-  }, []);
+    const fetchHeatmapData = async () => {
+      try {
+        // We assume your backend is running on port 4000 and proxy is set up,
+        // or you can use the full URL: 'http://localhost:4000/api/orders/heatmap-data'
+        const response = await fetch('/api/orders/heatmap-data'); 
+        const data = await response.json();
 
-  const surgeHints = useMemo(() => zones
-    .filter(z => z.demand > 0.75)
-    .map(z => `${z.name}`), [zones]);
+        // Convert our [{lat, lng}] data into Google Map LatLng objects
+        const googleMapsData = data.map(point => 
+          new window.google.maps.LatLng(point.lat, point.lng)
+        );
+        
+        setHeatmapData(googleMapsData);
+      } catch (error) {
+        console.error('Error fetching heatmap data:', error);
+      }
+    };
+
+    fetchHeatmapData();
+    // Optional: Set an interval to refresh the data every 10 seconds
+    const interval = setInterval(fetchHeatmapData, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -44,55 +64,45 @@ function DeliveryHeatmap() {
       <div className="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 bg-white rounded-2xl professional-shadow">
           <div className="p-4 border-b border-slate-200 flex items-center justify-between">
-            <div className="font-semibold text-slate-800">City overview</div>
-            <div className="text-sm text-slate-600">Tap a zone for details</div>
+            <div className="font-semibold text-slate-800">Live Order Map</div>
+            <div className="text-sm text-slate-600">Data refreshes every 10 seconds</div>
           </div>
+          
           <div className="p-6">
-            <div className="relative h-[480px] rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden">
-              {zones.map(z => (
-                <div key={z.id} className="absolute" style={{
-                  left: `${z.center.x}%`,
-                  top: `${z.center.y}%`,
-                  width: `${z.radius * 2}%`,
-                  height: `${z.radius * 2}%`,
-                  transform: 'translate(-50%, -50%)',
-                  borderRadius: '50%',
-                  background: `radial-gradient(circle, ${demandToColor(z.demand)}55 0%, ${demandToColor(z.demand)}22 40%, transparent 70%)`,
-                  boxShadow: `0 0 0 2px ${demandToColor(z.demand)}33`
-                }}>
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/80 rounded-full px-3 py-1 text-xs font-semibold text-slate-800">
-                    {z.name} • {(z.demand*100|0)}%
-                  </div>
-                </div>
-              ))}
-              {/* Legend */}
-              <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur rounded-xl border border-slate-200 px-3 py-2 text-xs text-slate-700">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center gap-1"><i className="w-3 h-3 rounded-full inline-block" style={{background:'#22c55e'}}></i>Low</span>
-                  <span className="inline-flex items-center gap-1"><i className="w-3 h-3 rounded-full inline-block" style={{background:'#fb923c'}}></i>Medium</span>
-                  <span className="inline-flex items-center gap-1"><i className="w-3 h-3 rounded-full inline-block" style={{background:'#e23744'}}></i>High</span>
-                </div>
+            {/* --- 3. Render the Map --- */}
+            {!isLoaded ? (
+              <div style={containerStyle} className="flex items-center justify-center bg-slate-100">
+                Loading Map...
               </div>
-            </div>
+            ) : (
+              <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={11}
+              >
+                {/* --- 4. Render the Heatmap Layer --- */}
+                <HeatmapLayer
+                  data={heatmapData}
+                  options={{
+                    radius: 20,
+                    opacity: 0.8
+                  }}
+                />
+              </GoogleMap>
+            )}
           </div>
         </div>
 
+        {/* This sidebar is from your original code. We can keep it! */}
         <div className="space-y-4">
           <div className="bg-white rounded-2xl professional-shadow p-4">
             <div className="font-semibold text-slate-800 mb-2">Recommendations</div>
-            {surgeHints.length ? (
-              <ul className="list-disc pl-5 text-sm text-slate-700">
-                {surgeHints.map(s => (
-                  <li key={s}>Move towards {s}. High order probability.</li>
-                ))}
-              </ul>
-            ) : (
-              <div className="text-sm text-slate-500">No surge zones right now. Stay near popular areas.</div>
-            )}
+            {/* You can rebuild this recommendation logic later based on real data */}
+            <div className="text-sm text-slate-500">High-demand zones are shown in red. Move towards these areas for more orders.</div>
           </div>
           <div className="bg-white rounded-2xl professional-shadow p-4">
             <div className="font-semibold text-slate-800 mb-2">Earnings Boost</div>
-            <div className="text-sm text-slate-700">Peak hour multiplier applies in red zones. Complete 3 deliveries for extra ₹60.</div>
+            <div className="text-sm text-slate-700">Peak hour multiplier applies in high-demand zones. Complete 3 deliveries for extra ₹60.</div>
           </div>
         </div>
       </div>
@@ -101,5 +111,3 @@ function DeliveryHeatmap() {
 }
 
 export default DeliveryHeatmap;
-
-
