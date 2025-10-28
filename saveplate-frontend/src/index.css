@@ -129,6 +129,16 @@
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
 }
 
+/* Hide scrollbar for filter chips */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Professional Logo & Icon Styles */
 .logo-container {
   display: inline-flex;
