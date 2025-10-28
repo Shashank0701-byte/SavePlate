@@ -34,6 +34,10 @@ SavePlate is a full-stack web application that connects restaurants with surplus
 - ♿ **Accessibility:** WCAG-compliant, keyboard navigable design  
 - 🔐 **Authentication:** Secure JWT-based auth system for both customers & restaurants  
 
+Future Advancements: Introduce Reasearch and Development, Suprise visits to the restraunta to check the quality of the food
+
+Add some reward features as well
+
 ---
 
 ## 🛠️ Tech Stack
