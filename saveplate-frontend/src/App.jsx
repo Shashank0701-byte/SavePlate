@@ -10,6 +10,10 @@ import Profile from "./pages/Profile";
 import RestaurantDashboard from "./pages/RestaurantDashboard";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import ReservationPage from "./pages/ReservationPage";
+import OrderTracking from "./pages/OrderTracking";
+import DeliveryHeatmap from "./pages/DeliveryHeatmap";
+import PartnerLogin from "./pages/PartnerLogin";
+import PartnerDashboard from "./pages/PartnerDashboard";
 
 function App() {
   // Simple authentication state (you can replace with proper auth later)
@@ -35,6 +39,10 @@ function App() {
             <Route path="/customer" element={<CustomerDashboard />} />
             <Route path="/meals" element={<CustomerDashboard />} />
             <Route path="/reservation/:id" element={<ReservationPage />} />
+            <Route path="/track" element={<OrderTracking />} />
+            <Route path="/partner/heatmap" element={<DeliveryHeatmap />} />
+            <Route path="/partner/login" element={<PartnerLogin />} />
+            <Route path="/partner/dashboard" element={<PartnerDashboard />} />
             
             {/* Restaurant signup route */}
             <Route path="/restaurant-signup" element={<Register userType="restaurant" setIsAuthenticated={setIsAuthenticated} />} />

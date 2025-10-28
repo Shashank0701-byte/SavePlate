@@ -1,44 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
-
-// Mock meal data
-const mockMealData = {
-  1: {
-    id: 1,
-    restaurantName: "Pasta Palace",
-    restaurantImage: "🍝",
-    mealName: "Creamy Alfredo Pasta",
-    originalPrice: 450,
-    discountedPrice: 225,
-    discount: 50,
-    quantity: 3,
-    pickupTime: "6:00 PM - 8:00 PM",
-    distance: "0.8 km",
-    rating: 4.5,
-    tags: ["Italian", "Vegetarian"],
-    description: "Rich and creamy alfredo pasta with fresh herbs",
-    restaurantAddress: "123 Food Street, Mumbai, Maharashtra 400001",
-    restaurantPhone: "+91 98765 43210"
-  },
-  2: {
-    id: 2,
-    restaurantName: "Spice Garden",
-    restaurantImage: "🍛",
-    mealName: "Chicken Biryani",
-    originalPrice: 380,
-    discountedPrice: 190,
-    discount: 50,
-    quantity: 5,
-    pickupTime: "7:00 PM - 9:00 PM",
-    distance: "1.2 km",
-    rating: 4.7,
-    tags: ["Indian", "Non-Veg"],
-    description: "Aromatic basmati rice with tender chicken pieces",
-    restaurantAddress: "456 Spice Lane, Mumbai, Maharashtra 400002",
-    restaurantPhone: "+91 98765 43211"
-  }
-};
+import { meals as mealsData } from "../data/meals";
 
 function ReservationPage() {
   const { id } = useParams();
@@ -60,10 +23,9 @@ function ReservationPage() {
   useEffect(() => {
     // Simulate API call to fetch meal details
     setTimeout(() => {
-      const mealData = mockMealData[id];
-      if (mealData) {
-        setMeal(mealData);
-      }
+      const numericId = parseInt(id, 10);
+      const mealData = mealsData.find(m => m.id === numericId);
+      if (mealData) setMeal(mealData);
       setLoading(false);
     }, 1000);
   }, [id]);
@@ -80,6 +42,7 @@ function ReservationPage() {
       const newReservation = {
         id: `RES${Date.now()}`,
         mealId: meal.id,
+        restaurantId: meal.restaurantId,
         mealName: meal.mealName,
         restaurantName: meal.restaurantName,
         quantity: quantity,
@@ -94,6 +57,16 @@ function ReservationPage() {
 
       setReservation(newReservation);
       setStep("confirmation");
+
+      // Persist favorite restaurant for the user (simple localStorage model)
+      try {
+        const key = 'saveplate_favorites';
+        const prev = JSON.parse(localStorage.getItem(key) || '[]');
+        if (!prev.includes(meal.restaurantId)) {
+          const updated = [meal.restaurantId, ...prev].slice(0, 20);
+          localStorage.setItem(key, JSON.stringify(updated));
+        }
+      } catch {}
     } catch (error) {
       alert("Payment failed. Please try again.");
     } finally {
@@ -223,7 +196,7 @@ function ReservationPage() {
         </Link>
         <button
           onClick={() => setStep("payment")}
-          className="flex-1 bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors font-medium"
+          className="flex-1 bg-[#e23744] text-white py-3 px-6 rounded-lg hover:bg-[#c81f2b] transition-colors font-medium"
         >
           Proceed to Payment
         </button>
@@ -348,7 +321,7 @@ function ReservationPage() {
               <button
                 type="submit"
                 disabled={processingPayment}
-                className="flex-1 bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 bg-[#e23744] text-white py-3 px-6 rounded-lg hover:bg-[#c81f2b] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {processingPayment ? "Processing..." : `Pay ₹${totalAmount}`}
               </button>
@@ -367,7 +340,7 @@ function ReservationPage() {
               <button
                 onClick={handlePayment}
                 disabled={processingPayment}
-                className="flex-1 bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors font-medium"
+                className="flex-1 bg-[#e23744] text-white py-3 px-6 rounded-lg hover:bg-[#c81f2b] transition-colors font-medium"
               >
                 {processingPayment ? "Processing..." : `Pay ₹${totalAmount}`}
               </button>
@@ -416,6 +389,19 @@ function ReservationPage() {
           className="flex-1 bg-gray-200 text-gray-700 py-3 px-6 rounded-lg text-center hover:bg-gray-300 transition-colors"
         >
           Browse More Meals
+        </Link>
+        <Link
+          to="/track"
+          state={{ order: {
+            id: reservation.id,
+            restaurant: { name: meal.restaurantName, lat: 12.9721, lng: 77.5933 },
+            customer: { name: 'You', lat: 12.9716, lng: 77.5946 },
+            rider: { name: 'Arun (KA-12-AB-3456)', phone: '+91 9XXXXXXXXX', lat: 12.9690, lng: 77.5800 },
+            status: 'on_the_way'
+          }}}
+          className="flex-1 bg-[#e23744] text-white py-3 px-6 rounded-lg text-center hover:bg-[#c81f2b] transition-colors"
+        >
+          Track Order
         </Link>
       </div>
     </div>
